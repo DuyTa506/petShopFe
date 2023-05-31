@@ -1,0 +1,53 @@
+.customGradient {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .customGradient {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+  }
+}
+
+.customContainer {
+  width: 50% !important;
+  margin-bottom: 140px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.inputDiv{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.registerInputDiv{
+  margin-top: 1em;
+}
+.registerButton{
+  margin: auto;
+  margin-top: 2em;
+  width: 50%;
+}
+.pageTitle{
+  text-align: center;
+  padding: 0;
+  font-size: larger;
+  font-weight: 500;
+  color: #0e0e0f;
+  margin: 0;
+}

@@ -1,0 +1,20 @@
+.containterContent {
+    margin-bottom: 25px !important;
+    background: #fff;
+    padding: 10px;
+}
+
+.text {
+    font-size: 1em;
+    font-weight: bold;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    display: inline-block;
+    margin-right: 10px;
+    height: fit-content;
+    text-decoration: underline;
+}
+
+.starline {
+    display: inline-block;
+}

@@ -1,0 +1,32 @@
+.cartQty {
+    width: 50px;
+    height: 32px;
+    border-left: 0;
+    border-right: 0;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: text;
+    border-radius: 0;
+    margin-bottom: 0;
+    border: 1 solid black;
+}
+
+.cartBtn {
+    width: 50px;
+    height: 32px;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: text;
+    border-radius: 0;
+    margin-bottom: 0;
+    border: 1 solid black;
+}
+
+.cartRemoveBtn {
+    position: absolute;
+    right: 5%;
+}
