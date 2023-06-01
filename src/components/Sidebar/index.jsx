@@ -40,7 +40,7 @@ function SideBar(props) {
           </div>
 
           <div className="sidebar-footer">
-            <span className="sidebar-item-label">Logout</span>
+            <span className="sidebar-item-label">Đăng xuất</span>
             <img
               src={BASE_URL + "assets/icons/logout.svg"}
               alt="icon-logout"

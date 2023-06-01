@@ -9,8 +9,11 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: #eee;
+  background: linear-gradient(-135deg,#c850c0,#4158d0);
 }
+
+
+
 
 @media (min-width: 768px) {
   .gradient-form {

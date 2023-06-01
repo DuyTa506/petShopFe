@@ -121,7 +121,7 @@ function Signup() {
           <MDBCol md="6">
             <div className={`d-flex flex-column justify-content-center h-100`}>
               <img
-                src="../img/default/loginimage.png"
+                src="https://th.bing.com/th/id/R.9dda7f580c3d7b6eff8b6fb3fdf6d36c?rik=JaJT0KuTiVwqlw&pid=ImgRaw&r=0"
                 className={`${style.customGradient}`}
               ></img>
             </div>

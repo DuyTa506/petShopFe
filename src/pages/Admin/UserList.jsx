@@ -81,7 +81,6 @@ const UserList = () => {
                     <th>Gender</th>
                     <th>Phone</th>
                     <th>Role</th>
-                    <th>Is Deleted</th>
                     <th>Edit</th>
                   </tr>
                 </thead>
@@ -100,7 +99,6 @@ const UserList = () => {
                         <td>{result.gender}</td>
                         <td className={style.tableDate}>{result.phone}</td>
                         <td>{result.role}</td>
-                        <td>{result.deleted.toString()}</td>
                         <td>
                           <a
                             className={style.tableIcons}

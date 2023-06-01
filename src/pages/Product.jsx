@@ -108,7 +108,11 @@ const Product = () => {
       setLoading2(true);
 
       const response = await fetch(
-        `http://localhost:8080/api/products/get/${id}`
+        `http://localhost:8080/api/products/get/${id}`,{
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
       const data = await response.json();
       setProduct(data);
@@ -116,7 +120,11 @@ const Product = () => {
       setLoading(false);
       await axios
         .get(
-          `http://localhost:8080/api/products/filter/category?category=${data.category.categoryId}&size=5`
+          `http://localhost:8080/api/products/filter/category?category=${data.category.categoryId}&size=5`,{
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
         )
         .then((res) => {
           setSimilarProducts(res.data.content);
@@ -130,7 +138,11 @@ const Product = () => {
     };
     const getRatings = async () => {
       await axios
-        .get(`/api/products/get-reviews?id=${id}`)
+        .get(`/api/products/get-reviews?id=${id}`,{
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
         .then((res) => setRatings(res.data));
     };
     getProduct();
@@ -358,10 +370,10 @@ const Product = () => {
                   className="btn btn-outline-dark"
                   onClick={() => addProduct(product)}
                 >
-                  Add to Cart
+                  Thêm vào giỏ hàng
                 </button>
                 <Link to="/cart" className="btn btn-dark mx-3">
-                  Go to Cart
+                  Đến giỏ hàng
                 </Link>
               </MDBCol>
             </MDBRow>

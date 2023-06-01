@@ -265,13 +265,13 @@ const Products = () => {
                       to={"/product/" + product.id}
                       className="btn btn-dark m-1"
                     >
-                      Buy Now
+                      Nhấn mua ngay
                     </Link>
                     <button
                       className="btn btn-dark m-1"
                       onClick={() => addProduct(product)}
                     >
-                      Add to Cart
+                      Thêm vào giỏ hàng
                     </button>
                   </div>
                 </div>
@@ -324,7 +324,7 @@ const Products = () => {
                 // setCatPath("all categories");
               }}
             >
-              <span className="font-semibold">All Categories</span>
+              <span className="font-semibold">Tất cả dịch vụ</span>
               {/* <span>{`(${products.length})`}</span> */}
             </h3>
             <MDBListGroup>
@@ -352,7 +352,7 @@ const Products = () => {
               <br></br>
               <hr></hr>
               <br></br>
-              <span className="font-semibold">All Brands</span>
+              <span className="font-semibold">Tất cả các hãng</span>
               {/* <span>{`(${products.length})`}</span> */}
             </h3>
             <MDBListGroup>

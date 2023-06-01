@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
+  MDBIcon,
   MDBBtn,
   MDBContainer,
   MDBCard,
@@ -88,15 +89,17 @@ function Login() {
 
           <MDBCol md="6">
             <MDBCardBody className="d-flex flex-column">
-              <h3 className="fw-normal my-4 pb-3 text-center">Đăng Nhập</h3>
+            <MDBIcon fas icon="paw fa-4x me-4" />
+            <span className="h1 fw-bold mb-0 text-center">Đăng nhập</span>
               <div className={style.inputDiv}>
                 <MDBInput
                   autoComplete="new-password"
                   wrapperClass="mb-4 mx-5"
-                  label="Tên đăng nhập"
+                  
                   id="loginEmail"
                   type="email"
-                  size="lg"
+                  size="s"
+                  placeholder="Tên đăng nhập"
                   onChange={(e) =>
                     setUser({ ...user, username: e.target.value })
                   }
@@ -105,10 +108,10 @@ function Login() {
               <div className={style.inputDiv}>
                 <MDBInput
                   wrapperClass="mb-2 mx-5"
-                  label="Mật khẩu"
                   id="loginPwd"
                   type="password"
-                  size="lg"
+                  size="s"
+                  placeholder="Mật khẩu"
                   maxLength={64}
                   onChange={(e) =>
                     setUser({ ...user, password: e.target.value })
@@ -138,9 +141,10 @@ function Login() {
                 Đăng nhập
               </Button>
 
+
               <p
                 className="mb-0 pb-lg-2 text-center"
-                style={{ color: "#393f81" }}
+                style={{ color: "#a6aad8" }}
               >
                 Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
               </p>

@@ -56,7 +56,7 @@ const ProductList = () => {
   return (
     <>
       <div className="dashboard-container">
-        <SideBar choose={4} menu={sidebar_menu} />
+        <SideBar choose={3} menu={sidebar_menu} />
 
         <div className={"dashboard-body " + style.dbBody}>
           <MDBContainer className={style.mainContainer}>
@@ -80,7 +80,7 @@ const ProductList = () => {
                     <th>Link Ảnh</th>
                     <th>Loại sản phẩm</th>
                     <th>Nhãn hàng</th>
-                    <th>Is Deleted</th>
+                    <th>Đã xóa</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>

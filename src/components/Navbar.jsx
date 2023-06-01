@@ -66,7 +66,7 @@ const Navbar = () => {
       <div className="container">
         <NavLink className="navbar-brand fw-bold fs-4 px-2" to="/">
           {" "}
-          React Ecommerce
+          MTA Pet Shop
         </NavLink>
         <button
           className="navbar-toggler mx-2"
@@ -97,7 +97,7 @@ const Navbar = () => {
               id="keyword"
               className="form-control my-0 py-1"
               type="text"
-              placeholder="Search"
+              placeholder="Tìm kiếm"
               aria-label="Search"
             />
           </div>
@@ -106,12 +106,12 @@ const Navbar = () => {
           <ul className="navbar-nav m-auto my-2 text-center">
             <li className="nav-item">
               <NavLink className="nav-link" to="/">
-                Home{" "}
+                Trang chủ{" "}
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/product">
-                Products
+                Sản phẩm
               </NavLink>
             </li>
           </ul>
@@ -122,7 +122,7 @@ const Navbar = () => {
                   <MDBNavbarItem>
                     {" "}
                     <NavLink to="/cart" className="btn btn-outline-dark m-2">
-                      <i className="fa fa-cart-shopping mr-1"></i> Cart
+                      <i className="fa fa-cart-shopping mr-1"></i> Giỏ hàng
                       {/* ({userCart.length != 0 ? userCart.cartDetails.length : 0}) */}
                     </NavLink>
                   </MDBNavbarItem>
@@ -136,7 +136,7 @@ const Navbar = () => {
                         localStorage.getItem("role").toLowerCase() ==
                           "admin" ? (
                           <MDBDropdownItem link href="/admin/dashboard">
-                            Dashboard
+                            Trang quản lí admin
                           </MDBDropdownItem>
                         ) : (
                           <></>
@@ -157,10 +157,10 @@ const Navbar = () => {
               ) : (
                 <MDBNavbarItem>
                   <NavLink to="/login" className="btn btn-outline-dark m-2">
-                    <i className="fa fa-sign-in-alt mr-1"></i> Login
+                    <i className="fa fa-sign-in-alt mr-1"></i> Đăng nhập
                   </NavLink>
                   <NavLink to="/register" className="btn btn-outline-dark m-2">
-                    <i className="fa fa-user-plus mr-1"></i> Register
+                    <i className="fa fa-user-plus mr-1"></i> Đăng kí
                   </NavLink>
                 </MDBNavbarItem>
               )}

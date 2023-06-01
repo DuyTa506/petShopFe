@@ -77,7 +77,6 @@ const BrandList = () => {
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th>Is Deleted</th>
                     <th>Thao Tác</th>
                   </tr>
                 </thead>
@@ -90,7 +89,6 @@ const BrandList = () => {
                         <td className={style.tableDate}>{result.phone}</td>
                         <td className={style.tableDate}>{result.email}</td>
                         <td className={style.tableDate}>{result.address}</td>
-                        <td>{result.deleted.toString()}</td>
                         <td>
                           <a
                             className={style.tableIcons}
