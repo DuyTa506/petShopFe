@@ -56,13 +56,13 @@ const ProductList = () => {
   return (
     <>
       <div className="dashboard-container">
-        <SideBar choose={4} menu={sidebar_menu} />
+        <SideBar choose={3} menu={sidebar_menu} />
 
         <div className={"dashboard-body " + style.dbBody}>
           <MDBContainer className={style.mainContainer}>
             <div className={style.nav}>
               <a className={style.navItem} href="/dashboard/userList">
-                <b>Quản lí người dùng</b>
+                <b>Quản lí sản phẩm</b>
               </a>
             </div>
             <br></br>
@@ -93,10 +93,13 @@ const ProductList = () => {
                         <td className={style.tableDate}>
                           {result.description}
                         </td>
-                        <td className={style.tableDate}>{result.price}</td>
-                        <td className={style.tableDate}>{result.stock}</td>
+                        <td>{result.price}</td>
+                        <td>{result.stock}</td>
                         <td>{result.thumbnailUrl}</td>
-                        <td>{result.category.categoryName}</td>
+                        <td className={style.tableDate}>
+                          {" "}
+                          {result.category.categoryName}
+                        </td>
                         <td className={style.tableDate}>
                           {result.brand.brandName}
                         </td>

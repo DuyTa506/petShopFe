@@ -82,7 +82,7 @@ function Signup() {
                 .post(
                   LOGIN_URL,
                   {
-                    username: user.userName,
+                    username: user.username,
                     password: user.password,
                   },
                   {

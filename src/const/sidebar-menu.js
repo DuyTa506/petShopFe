@@ -2,40 +2,39 @@ import { BASE_URL } from "./constant";
 const sidebar_menu = [
   {
     id: 1,
-    icon: BASE_URL + "assets/icons/dashboard.svg",
 
-    path: "/",
+    path: "/dashboard",
     title: "Dashboard",
   },
   {
     id: 2,
-    icon: BASE_URL + "assets/icons/shipping.svg",
-    path: "/orders",
-    title: "Orders",
+
+    path: "/profile",
+    title: "Hồ sơ",
   },
   {
     id: 3,
-    icon: BASE_URL + "assets/icons/product.svg",
-    path: "/products",
-    title: "Products",
+
+    path: "/dashboard/ProductList",
+    title: "Quản lý sản phẩm",
   },
   {
     id: 4,
-    icon: BASE_URL + "assets/icons/user.svg",
+
     path: "/dashboard/userList",
-    title: "Accounts",
+    title: "Quản lý tài khoản",
   },
   {
     id: 5,
-    icon: BASE_URL + "assets/icons/user.svg",
-    path: "/profile",
-    title: "Categories",
+
+    path: "/dashboard/CategoryList",
+    title: "Quản lý loại sản phẩm",
   },
   {
     id: 6,
-    icon: BASE_URL + "assets/icons/user.svg",
-    path: "/profile",
-    title: "Brands",
+
+    path: "/dashboard/BrandList",
+    title: "Quản lý nhãn hàng",
   },
 ];
 

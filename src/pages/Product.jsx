@@ -23,6 +23,7 @@ import axios from "../api/axios";
 import { Footer, Navbar } from "../components";
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import { RELATIVE_URL_IMG_PRODUCT } from "../const/constant";
+import { Dropdown, Menu, Modal, Tooltip } from "antd";
 const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(false);
@@ -41,7 +42,7 @@ const Product = () => {
   const handleChange = (e) => {
     setComment(e.target.value);
   };
-
+  const { error } = Modal;
   const handleEdit = () => {
     // if (rate > 0) {
     //   axios
@@ -67,39 +68,39 @@ const Product = () => {
     // } else {
     //   error({
     //     title: "Lỗi đánh giá",
-    //     content: "Xin hãy đánh giá ít nhất 1 sao cho địa điểm.",
+    //     content: "Xin hãy đánh giá ít nhất 1 sao cho sản phẩm.",
     //   });
     // }
   };
 
   const handleCreate = () => {
     console.log("clickd");
-    // if (rate > 0) {
-    //   axios
-    //     .post(
-    //       "/location/api/pois/createRating",
-    //       {
-    //         rate: rate,
-    //         comment: comment,
-    //         userId: localStorage.getItem("id"),
-    //         poiId: poiId,
-    //       },
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //         },
-    //       }
-    //     )
-    //     .then((res) => {
-    //       setRatings(res.data);
-    //       setRate(0);
-    //     });
-    // } else {
-    //   error({
-    //     title: "Lỗi đánh giá",
-    //     content: "Xin hãy đánh giá ít nhất 1 sao cho địa điểm.",
-    //   });
-    // }
+    if (rate > 0) {
+      axios
+        .post(
+          "/api/products/addRate",
+          {
+            rate: rate,
+            comment: comment,
+            customerId: localStorage.getItem("id"),
+            product: id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((res) => {
+          setRatings(res.data);
+          setRate(0);
+        });
+    } else {
+      error({
+        title: "Lỗi đánh giá",
+        content: "Xin hãy đánh giá ít nhất 1 sao cho sản phẩm.",
+      });
+    }
   };
 
   useEffect(() => {
@@ -237,15 +238,15 @@ const Product = () => {
           maxLength={500}
           className="mt-2"
           style={{ height: 120, resize: "none" }}
-          placeholder="Chia sẻ trải nghiệm của bạn về nơi này"
+          placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này"
           onChange={handleChange}
           value={comment}
           spellCheck="false"
         />
 
-        <MDBBtn color="info" className="mt-2" onClick={handleEdit}>
+        <button disable color="info" className="mt-2" onClick={handleEdit}>
           Sửa
-        </MDBBtn>
+        </button>
       </MDBCol>
     );
   } else {
@@ -266,16 +267,12 @@ const Product = () => {
           maxLength={500}
           className="mt-2"
           style={{ height: 120, resize: "none" }}
-          placeholder="Chia sẻ trải nghiệm của bạn về nơi này"
+          placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này"
           onChange={handleChange}
           value={comment}
           spellCheck="false"
         />
-        <button
-          className="btn btn-outline-dark mt-2"
-          onClick={() => handleCreate}
-        >
-          {" "}
+        <button className="btn btn-outline-dark mt-2" onClick={handleCreate}>
           Gửi
         </button>
       </MDBCol>
@@ -319,7 +316,7 @@ const Product = () => {
                         <MDBCarouselItem
                           className="w-100 d-block"
                           itemId={item.id}
-                          src={RELATIVE_URL_IMG_PRODUCT + item.url}
+                          src={item.url}
                           alt="..."
                           height={500}
                           width={200}
@@ -405,7 +402,11 @@ const Product = () => {
                   <div key={item.id} className="card mx-4 text-center">
                     <img
                       className="card-img-top p-3"
-                      src={RELATIVE_URL_IMG_PRODUCT + item.thumbnailUrl}
+                      src={
+                        product.listImg.length > 0
+                          ? product.listImg[0].url
+                          : "https://adlog.narmadeayurvedam.com/dtup/default-product.png"
+                      }
                       alt="Card"
                       height={300}
                       width={300}
@@ -465,7 +466,7 @@ const Product = () => {
             {userRating.length > 0 ? (
               userRating
             ) : (
-              <p>Bạn vẫn chưa có đánh giá về địa điểm này.</p>
+              <p>Bạn vẫn chưa có đánh giá về sản phẩm này.</p>
             )}
             <MDBRow className="mt-5">
               <p className="fs-4 fw-bold">Đánh giá của người dùng:</p>
@@ -473,7 +474,7 @@ const Product = () => {
             {poiRatings.length > 0 ? (
               poiRatings
             ) : (
-              <p>Địa điểm này vẫn chưa được mọi người đánh giá.</p>
+              <p>sản phẩm này vẫn chưa được mọi người đánh giá.</p>
             )}
           </MDBCol>
         </MDBRow>

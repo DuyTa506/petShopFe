@@ -243,7 +243,11 @@ const Products = () => {
                 <div className="card text-center h-100" key={product.id}>
                   <img
                     className="card-img-top p-3"
-                    src={RELATIVE_URL_IMG_PRODUCT + product.thumbnailUrl}
+                    src={
+                      product.listImg.length > 0
+                        ? product.listImg[0].url
+                        : "https://adlog.narmadeayurvedam.com/dtup/default-product.png"
+                    }
                     alt="Card"
                     height={300}
                   />

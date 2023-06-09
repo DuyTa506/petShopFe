@@ -1,0 +1,215 @@
+.containterContent {
+    margin-bottom: 25px !important;
+    background: #fff;
+    padding: 10px;
+}
+
+.containterCard {
+    height: 150px;
+}
+
+.containterPie {
+    height: 400px;
+}
+
+.btn {
+    margin-left: 30px;
+    margin-top: 20px;
+    height: 40px;
+    width: 148px;
+    border-radius: 5px;
+}
+
+.statCard {
+    margin: 0 auto;
+    height: 80%;
+    width: 80%;
+    background: #fff;
+}
+
+.pieCard {
+    padding: 15px;
+    margin: 0 auto;
+    height: 80%;
+    width: 80%;
+    background: #fff;
+}
+
+.statContainer {
+    margin-top: 50px;
+}
+
+.bodyContainer {
+    margin: 0px;
+    margin-top: 10vh;
+    font-family: "Monaco", Consolas, "Lucida Console", monospace;
+}
+
+.allCountBox {
+    text-align: center;
+    padding-top: 15px;
+    width: 98%;
+    padding-bottom: 15px;
+    border-style: none;
+}
+
+.countItem {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.countItemIcon {
+    font-size: 30px;
+    padding: 10px;
+}
+
+.countItemIconBox1 {
+    position: absolute;
+    top: 35%;
+    color: rgb(195, 0, 13);
+    width: 100px;
+    height: 100%;
+}
+
+.countItemIconBox2 {
+    color: rgb(0, 199, 60);
+    position: absolute;
+    top: 35%;
+    width: 100px;
+    height: 100%;
+}
+
+.countItemIconBox3 {
+    color: rgb(0, 117, 201);
+    position: absolute;
+    top: 35%;
+    width: 100px;
+    height: 100%;
+}
+
+.countItemIconBox4 {
+    color: rgb(204, 207, 0);
+    position: absolute;
+    top: 35%;
+    width: 100px;
+    height: 100%;
+}
+
+.countItemIconBox5 {
+    color: rgb(144, 0, 173);
+    background-color: rgb(254, 208, 255);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.countItemIconBox6 {
+    color: rgb(184, 83, 0);
+    background-color: rgb(255, 223, 201);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.countItemIconBox7 {
+    color: rgb(255, 99, 132);
+    background-color: rgba(255, 99, 132, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.countItemIconBox8 {
+    color: rgb(54, 162, 235);
+    background-color: rgba(54, 162, 235, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.countItemText1 {
+    text-align: center;
+    color: rgb(195, 0, 13);
+}
+
+.countItemText2 {
+    color: rgb(0, 199, 60);
+    text-align: center;
+}
+
+.countItemText3 {
+    color: rgb(0, 117, 201);
+    text-align: center;
+}
+
+.countItemText4 {
+    color: rgb(204, 207, 0);
+}
+
+.countItemText5 {
+    color: rgb(144, 0, 173);
+    text-align: center;
+}
+
+.countItemText6 {
+    color: rgb(184, 83, 0);
+}
+
+.countItemText7 {
+    color: rgb(255, 99, 132);
+}
+
+.countItemText8 {
+    color: rgb(54, 162, 235);
+}
+
+.byDateBox {
+    text-align: center;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-style: none;
+    margin-top: 25px;
+}
+
+.ratingBox {
+    width: 90% !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    border-style: none !important;
+    margin-top: 25px !important;
+}
+
+.ratingBox {
+    text-align: center;
+    margin: auto;
+}
+
+.ratingStar {
+    color: rgb(255, 238, 0);
+}
+
+.ratingBoxItem {
+    margin: auto;
+}
+
+.poiImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 20%;
+}
+
+.cardIcon {
+    display: inline-block;
+    width: 35%;
+    height: 100%;
+}
+
+.pie {
+    margin: 0 auto;
+}
+
+.titlePie {
+    text-align: center;
+}

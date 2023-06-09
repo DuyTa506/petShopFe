@@ -22,10 +22,21 @@ function SideBar(props) {
     setActive(id);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("id");
+    window.location.href = "/";
+  };
+
+  const handleToHome = () => {
+    window.location.href = "/";
+  };
+
   return (
     <nav className="sidebar">
       <div className="sidebar-container">
-        <div className="sidebar-logo-container">
+        <div onClick={handleToHome} className="sidebar-logo-container">
           <img src={BASE_URL + "img/logo.png"} alt="logo" />
         </div>
 
@@ -33,13 +44,12 @@ function SideBar(props) {
           <div className="sidebar-items">
             {props.menu.map((item, index) => (
               <div key={index} onClick={() => __navigate(item.id)}>
-                {console.log(props.choose)}
                 <SideBarItem active={props.choose == item.id} item={item} />
               </div>
             ))}
           </div>
 
-          <div className="sidebar-footer">
+          <div onClick={handleLogout} className="sidebar-footer">
             <span className="sidebar-item-label">Logout</span>
             <img
               src={BASE_URL + "assets/icons/logout.svg"}

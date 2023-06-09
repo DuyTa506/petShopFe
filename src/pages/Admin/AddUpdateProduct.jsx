@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useState, useRef, useMemo } from "react";
+import SideBar from "../../components/Sidebar/index";
+import sidebar_menu from "../../const/sidebar-menu";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Component } from "react";
@@ -50,6 +52,9 @@ class POIAddUpdate extends Component {
       brands: [],
       selectedBrands: [],
       BrandChanged: false,
+      categories: [],
+      selectedCategories: [],
+      CategoryChanged: false,
       newImages: [],
       deletedImages: [],
     };
@@ -57,6 +62,7 @@ class POIAddUpdate extends Component {
   componentDidMount() {
     const queryParams = new URLSearchParams(window.location.search);
     const id = queryParams.get("id");
+    console.log(id);
     if (id > 0) document.title = "Chỉnh sửa";
     else document.title = "Thêm ";
     axios
@@ -75,16 +81,29 @@ class POIAddUpdate extends Component {
         console.log(error);
         return Promise.reject(error);
       });
+    axios
+      .get(`/api/categories`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        const data = res.data;
+        this.setState({
+          categories: data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        return Promise.reject(error);
+      });
     if (id > 0) {
       axios
-        .get(
-          `http://localhost:8080/location/api/pois/list/admin/update/` + id,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
+        .get(`http://localhost:8080/api/products/get/` + id, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         .then((res) => {
           const data = res.data;
           this.setState({
@@ -96,15 +115,11 @@ class POIAddUpdate extends Component {
           return Promise.reject(error);
         });
       axios
-        .get(
-          `http://localhost:8080/location/api/pois/list/admin/update/images/` +
-            id,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
+        .get(`http://localhost:8080/api/products/get-images/` + id, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         .then((res) => {
           const data = res.data;
           this.setState({
@@ -121,47 +136,17 @@ class POIAddUpdate extends Component {
         dataLoaded: true,
       });
   }
-  reloadImgs() {
-    const queryParams = new URLSearchParams(window.location.search);
-    const id = queryParams.get("id");
 
-    if (id > 0) {
-      axios
-        .get(
-          `http://localhost:8080/location/api/pois/list/admin/update/images/` +
-            id,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
-        .then((res) => {
-          const data = res.data;
-          this.setState({
-            images: data,
-            dataLoaded: true,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-          return Promise.reject(error);
-        });
-    }
-  }
-
-  filterChanged = async (event) => {
-    const filterDropdown = document.getElementById("filterDropdown");
+  filterCategoryChanged = async (event) => {
+    const filterDropdown = document.getElementById("filterCategoryDropdown");
     filterDropdown.innerHTML = event.currentTarget.name;
     filterDropdown.name = event.currentTarget.id;
   };
 
-  desChanged = async (event) => {
-    var items = event.options;
-    console.log(items);
-    // this.setState({
-    //   selectedDestinations: event.currentTarget
-    // })
+  filterBrandChanged = async (event) => {
+    const filterDropdown = document.getElementById("filterBrandDropdown");
+    filterDropdown.innerHTML = event.currentTarget.name;
+    filterDropdown.name = event.currentTarget.id;
   };
 
   delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -177,15 +162,7 @@ class POIAddUpdate extends Component {
     ) {
       validated = false;
       document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập tên của địa điểm.";
-    }
-    if (
-      document.getElementById("addressInput").value == null ||
-      document.getElementById("addressInput").value == ""
-    ) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập địa chỉ của địa điểm.";
+        "Hãy nhập tên của sản phẩm.";
     }
     if (
       document.getElementById("descInput").value == null ||
@@ -193,15 +170,15 @@ class POIAddUpdate extends Component {
     ) {
       validated = false;
       document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập mô tả của địa điểm.";
+        "Hãy nhập mô tả của sản phẩm.";
     }
     if (
-      document.getElementById("durationInput").value == null ||
-      document.getElementById("durationInput").value == ""
+      document.getElementById("quantityInput").value == null ||
+      document.getElementById("quantityInput").value == ""
     ) {
       validated = false;
       document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập khoảng thời gian của địa điểm.";
+        "Hãy nhập số lượng sản phẩm.";
     }
     if (
       document.getElementById("priceInput").value == null ||
@@ -209,71 +186,17 @@ class POIAddUpdate extends Component {
     ) {
       validated = false;
       document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập giá trung bình của địa điểm.";
+        "Hãy nhập giá của sản phẩm.";
     }
-    if (
-      document.getElementById("closeInput").value == null ||
-      document.getElementById("closeInput").value == ""
-    ) {
+
+    if (document.getElementById("filterCategoryDropdown").name == null) {
       validated = false;
       document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập thời gian đóng cửa của địa điểm.";
+        "Hãy chọn loại sản phẩm";
     }
-    if (
-      document.getElementById("openInput").value == null ||
-      document.getElementById("openInput").value == ""
-    ) {
+    if (document.getElementById("filterBrandDropdown").name == null) {
       validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập thời gian mở cửa của địa điểm.";
-    }
-    if (
-      document.getElementById("rateInput").value == null ||
-      document.getElementById("rateInput").value == "" ||
-      parseFloat(document.getElementById("rateInput").value) > 5
-    ) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập đánh giá của địa điểm(Trong khoảng từ 0 đến 5).";
-    }
-    if (
-      document.getElementById("latInput").value == null ||
-      document.getElementById("latInput").value == ""
-    ) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập vĩ độ của địa điểm.";
-    }
-    if (
-      document.getElementById("lonInput").value == null ||
-      document.getElementById("lonInput").value == ""
-    ) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập kinh độ của địa điểm.";
-    }
-    if (document.getElementById("filterDropdown").name == null) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy chọn danh mục của địa điểm.";
-    }
-    if (
-      document.getElementById("emailInput").value != null &&
-      !validator.isEmail(document.getElementById("emailInput").value)
-    ) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy nhập đúng email.";
-    }
-    if (id != 0 && curDes == null && this.state.destinationChanged == true) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy chọn các điểm đến.";
-    }
-    if (id == 0 && curDes == null) {
-      validated = false;
-      document.getElementById("errorMessage").innerHTML =
-        "Hãy chọn các điểm đến.";
+      document.getElementById("errorMessage").innerHTML = "Hãy chọn nhãn hàng.";
     }
     // console.log(document.getElementById("nameInput").value);
     // console.log(document.getElementById("addressInput").value);
@@ -285,38 +208,22 @@ class POIAddUpdate extends Component {
     // console.log(document.getElementById("rateInput").value);
     // console.log(document.getElementById("latInput").value);
     // console.log(document.getElementById("lonInput").value);
-    console.log(document.getElementById("filterDropdown").name);
+    console.log(document.getElementById("filterCategoryDropdown").name);
     if (id > 0) {
       if (validated) {
         const loadingIcon = document.getElementById("loadingIcon");
         loadingIcon.style.display = "inline";
-        var hms = document.getElementById("closeInput").value; // your input string
-        var a = hms.split(":"); // split it at the colons
-        var close = +a[0] * 60 * 60 + +a[1] * 60;
-        var hms = document.getElementById("openInput").value; // your input string
-        var a = hms.split(":"); // split it at the colons
-        var open = +a[0] * 60 * 60 + +a[1] * 60;
-        var dura = document.getElementById("durationInput").value * 60 * 60;
         await axios({
           method: "post",
-          url: "http://localhost:8080/location/api/pois/update",
+          url: "http://localhost:8080/api/products/update",
           data: {
-            activityId: id,
-            address: document.getElementById("addressInput").value,
+            id: id,
             name: document.getElementById("nameInput").value,
             description: document.getElementById("descInput").value,
-            additionalInfo: document.getElementById("infoInput").value,
-            email: document.getElementById("emailInput").value,
-            closingTime: close,
-            openingTime: open,
-            duration: dura,
-            phoneNumber: document.getElementById("phoneInput").value,
             price: document.getElementById("priceInput").value,
-            website: document.getElementById("webInput").value,
-            categoryId: document.getElementById("filterDropdown").name,
-            rating: document.getElementById("rateInput").value,
-            lat: document.getElementById("latInput").value,
-            lon: document.getElementById("lonInput").value,
+            stock: document.getElementById("quantityInput").value,
+            categoryId: document.getElementById("filterCategoryDropdown").name,
+            brandId: document.getElementById("filterBrandDropdown").name,
           },
           headers: {
             "Content-Type": "application/json",
@@ -325,7 +232,14 @@ class POIAddUpdate extends Component {
         });
         await this.state.deletedImages.forEach((entry, index) => {
           axios.post(
-            `http://localhost:8080/location/api/pois/deleteImg/` + entry
+            `http://localhost:8080/api/products/deleteImg/` + entry,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
           );
         });
         await this.state.newImages.forEach((entry, index) => {
@@ -334,10 +248,7 @@ class POIAddUpdate extends Component {
           var desc = "*";
           axios
             .post(
-              `http://localhost:8080/location/api/pois/addImg/` +
-                id +
-                "/" +
-                desc,
+              `http://localhost:8080/api/products/addImg/` + id + "/" + desc,
               formData,
               {
                 headers: {
@@ -348,99 +259,60 @@ class POIAddUpdate extends Component {
             )
             .then(function (response) {});
         });
-        if (this.state.destinationChanged) {
-          const desData = this.state.currentDestinations;
-          await axios({
-            method: "post",
-            url:
-              "http://localhost:8080/location/api/destination/poi/update/" + id,
-            data: desData,
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "application/json",
-            },
-          });
-        }
 
         await this.delay(3000);
-        window.location.href = "../poi/adminlist";
+        window.location.href = "/dashboard/ProductList";
       }
     } else {
       if (validated) {
+        console.log("af");
         const loadingIcon = document.getElementById("loadingIcon");
         loadingIcon.style.display = "inline";
-        var hms = document.getElementById("closeInput").value; // your input string
-        var a = hms.split(":"); // split it at the colons
-        var close = +a[0] * 60 * 60 + +a[1] * 60;
-        var hms = document.getElementById("openInput").value; // your input string
-        var a = hms.split(":"); // split it at the colons
-        var open = +a[0] * 60 * 60 + +a[1] * 60;
-        var dura = document.getElementById("durationInput").value * 60 * 60;
         var images = this.state.newImages;
-        //console.log(images);
+        console.log(images);
         await axios({
           method: "post",
-          url: "http://localhost:8080/location/api/pois/add",
+          url: "http://localhost:8080/api/products/insert",
           data: {
-            address: document.getElementById("addressInput").value,
             name: document.getElementById("nameInput").value,
             description: document.getElementById("descInput").value,
-            additionalInfo: document.getElementById("infoInput").value,
-            email: document.getElementById("emailInput").value,
-            closingTime: close,
-            openingTime: open,
-            duration: dura,
-            phoneNumber: document.getElementById("phoneInput").value,
             price: document.getElementById("priceInput").value,
-            website: document.getElementById("webInput").value,
-            categoryId: document.getElementById("filterDropdown").name,
-            rating: document.getElementById("rateInput").value,
-            lat: document.getElementById("latInput").value,
-            lon: document.getElementById("lonInput").value,
+            categoryId: document.getElementById("filterCategoryDropdown").name,
+            brandId: document.getElementById("filterBrandDropdown").name,
           },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
-        }).then(function (response) {
-          id = response.data;
-          images.forEach((entry, index) => {
-            const formData = new FormData();
-            formData.append("File", entry);
-            var desc = "*";
-            axios
-              .post(
-                `http://localhost:8080/location/api/pois/addImg/` +
-                  id +
-                  "/" +
-                  desc,
-                formData,
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    "Content-Type": "multipart/form-data",
-                  },
-                }
-              )
-              .then(function (response) {});
-          });
-          if (curDes != null) {
-            const desData = curDes;
-            axios({
-              method: "post",
-              url:
-                "http://localhost:8080/location/api/destination/poi/update/" +
-                id,
-              data: desData,
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json",
-              },
+        })
+          .then(function (response) {
+            id = response.data.id;
+            images.forEach((entry, index) => {
+              const formData = new FormData();
+              formData.append("File", entry);
+              var desc = "*";
+              axios
+                .post(
+                  `http://localhost:8080/api/products/addImg/` +
+                    id +
+                    "/" +
+                    desc,
+                  formData,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                      "Content-Type": "multipart/form-data",
+                    },
+                  }
+                )
+                .then(function (response) {});
             });
-          }
-        });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         await this.delay(3000);
-        window.location.href = "../poi/adminlist";
+        window.location.href = "/dashboard/ProductList";
       }
     }
   };
@@ -448,7 +320,7 @@ class POIAddUpdate extends Component {
   deleteImage = async (event) => {
     const imgId = event.currentTarget.id;
     confirm({
-      title: "Bạn có chắc mình muốn xóa ảnh địa điểm này không?",
+      title: "Bạn có chắc mình muốn xóa ảnh này không?",
       content: "Ảnh sẽ bị xóa",
       okText: "Có",
       okType: "danger",
@@ -474,7 +346,7 @@ class POIAddUpdate extends Component {
   deleteNewImage = async (event) => {
     const imgId = event.currentTarget.id;
     confirm({
-      title: "Bạn có chắc mình muốn xóa ảnh địa điểm này không?",
+      title: "Bạn có chắc mình muốn xóa ảnh này không?",
       content: "Ảnh sẽ bị xóa",
       okText: "Có",
       okType: "danger",
@@ -535,9 +407,9 @@ class POIAddUpdate extends Component {
             src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831"
             width="50"
           />
-          <MDBBtn className={style.updateBtn} onClick={this.updateClick}>
+          <button className={style.updateBtn} onClick={this.updateClick}>
             Cập nhật thông tin
-          </MDBBtn>
+          </button>
         </div>
       );
     else
@@ -549,21 +421,21 @@ class POIAddUpdate extends Component {
             src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831"
             width="50"
           />
-          <MDBBtn className={style.updateBtn} onClick={this.updateClick}>
-            Thêm địa điểm
-          </MDBBtn>
+          <button className={style.updateBtn} onClick={this.updateClick}>
+            Thêm sản phẩm
+          </button>
         </div>
       );
     const navItem = [];
-    if (id > 0) navItem.push(<b>Chỉnh sửa địa điểm</b>);
-    else navItem.push(<b>Thêm địa điểm</b>);
+    if (id > 0) navItem.push(<b>Chỉnh sửa sản phẩm</b>);
+    else navItem.push(<b>Thêm sản phẩm</b>);
     const headerText = [];
     if (id > 0)
       headerText.push(
-        <h2 style={{ textAlign: "center" }}>Cập nhật Địa điểm</h2>
+        <h2 style={{ textAlign: "center" }}>Cập nhật sản phẩm</h2>
       );
     else
-      headerText.push(<h2 style={{ textAlign: "center" }}>Thêm Địa điểm</h2>);
+      headerText.push(<h2 style={{ textAlign: "center" }}>Thêm sản phẩm</h2>);
     const imageAddBtn = [];
     imageAddBtn.push(
       <MDBContainer>
@@ -582,7 +454,7 @@ class POIAddUpdate extends Component {
     );
     //Set initial content
     const selectDestination = [];
-    if (this.state.dataLoaded && this.state.desDataLoaded) {
+    if (this.state.dataLoaded) {
       selectDestination.push(
         <Select
           defaultValue={this.state.selectedDestinations}
@@ -603,67 +475,26 @@ class POIAddUpdate extends Component {
       );
       if (id > 0) {
         document.getElementById("nameInput").value = this.state.poi.name;
-        document.getElementById("addressInput").value = this.state.poi.address;
         document.getElementById("descInput").value = this.state.poi.description;
-        document.getElementById("infoInput").value =
-          this.state.poi.additionalInfo;
-        document.getElementById("webInput").value = this.state.poi.website;
-        document.getElementById("phoneInput").value =
-          this.state.poi.phoneNumber;
-        document.getElementById("emailInput").value = this.state.poi.email;
         document.getElementById("priceInput").value = this.state.poi.price;
-        document.getElementById("rateInput").value = this.state.poi.rating;
-        document.getElementById("latInput").value = this.state.poi.lat;
-        document.getElementById("lonInput").value = this.state.poi.lon;
-        const duration = this.state.poi.duration / 60 / 60;
-        document.getElementById("durationInput").value = duration;
-        //Opening Time
-        var sec_num = parseInt(this.state.poi.openingTime, 10);
-        var hours = Math.floor(sec_num / 3600);
-        var minutes = Math.floor((sec_num - hours * 3600) / 60);
-        var seconds = sec_num - hours * 3600 - minutes * 60;
+        document.getElementById("quantityInput").value = this.state.poi.stock;
 
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        var openTime = hours + ":" + minutes + ":" + seconds;
-        document.getElementById("openInput").value = openTime;
-        //Closing Time
-        var sec_num = parseInt(this.state.poi.closingTime, 10);
-        var hours = Math.floor(sec_num / 3600);
-        var minutes = Math.floor((sec_num - hours * 3600) / 60);
-        var seconds = sec_num - hours * 3600 - minutes * 60;
+        const filterCategoryDropdown = document.getElementById(
+          "filterCategoryDropdown"
+        );
+        filterCategoryDropdown.innerHTML = this.state.poi.category.categoryName;
+        filterCategoryDropdown.name = this.state.poi.category.categoryId;
 
-        if (hours < 10) {
-          hours = "0" + hours;
-        }
-        if (minutes < 10) {
-          minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        var closeTime = hours + ":" + minutes + ":" + seconds;
-        document.getElementById("closeInput").value = closeTime;
-
-        const filterDropdown = document.getElementById("filterDropdown");
-        filterDropdown.innerHTML = this.state.poi.categoryName;
-        filterDropdown.name = this.state.poi.categoryId;
+        const filterBrandDropdown = document.getElementById(
+          "filterBrandDropdown"
+        );
+        filterBrandDropdown.innerHTML = this.state.poi.brand.brandName;
+        filterBrandDropdown.name = this.state.poi.brand.brandId;
         //Change height of textboxes
         document.getElementById("nameInput").style.height =
           document.getElementById("nameInput").scrollHeight + "px";
         document.getElementById("descInput").style.height =
           document.getElementById("descInput").scrollHeight + "px";
-        document.getElementById("addressInput").style.height =
-          document.getElementById("addressInput").scrollHeight + "px";
-        document.getElementById("infoInput").style.height =
-          document.getElementById("infoInput").scrollHeight + "px";
         if (this.state.images.length > 0) {
           this.state.images.forEach((entry, index) => {
             let imgLink = entry.url;
@@ -725,261 +556,156 @@ class POIAddUpdate extends Component {
     requiredStar.push(<b className={style.requiredStar}>*</b>);
 
     return (
-      <MDBContainer className={style.mainContainer}>
-        <div className={style.nav}>
-          <a className={style.navItem} href="./adminlist">
-            <b>Quản lí địa điểm</b>
-          </a>
-          <FontAwesomeIcon className={style.arrowIcon} icon={faAngleRight} />
-          {navItem}
-        </div>
-        {headerText}
-        {submitBtn}
-        <div id="errorMessage" className={style.errorMessage}></div>
-        <label>
-          <b>Tên</b>
-          {requiredStar}
-        </label>
-        <MDBTextArea
-          id="nameInput"
-          type="text"
-          maxLength="100"
-          placeholder="Thêm tên cho địa điểm"
-          className={style.textInputs}
-          onChange={onTextAreaInput}
-          rows={1}
-        />
-        <label>
-          <b>Địa chỉ</b>
-          {requiredStar}
-        </label>
-        <MDBTextArea
-          id="addressInput"
-          type="text"
-          maxLength="300"
-          placeholder="Thêm địa chỉ"
-          className={style.textInputs}
-          onChange={onTextAreaInput}
-          rows={1}
-        />
-        <label>
-          <b>Mô tả</b>
-          {requiredStar}
-        </label>
-        <MDBTextArea
-          id="descInput"
-          type="text"
-          maxLength="4000"
-          placeholder="Thêm mô tả"
-          className={style.textInputs}
-          onChange={onTextAreaInput}
-          rows={7}
-        />
-        <label>
-          <b>Thông tin thêm</b>
-        </label>
-        <MDBTextArea
-          id="infoInput"
-          type="text"
-          maxLength="1000"
-          placeholder="Thêm thông tin"
-          className={style.textInputs}
-          onChange={onTextAreaInput}
-          rows={1}
-        />
-        <label>
-          <b>Trang web</b>
-        </label>
-        <MDBInput
-          id="webInput"
-          type="text"
-          maxLength="500"
-          placeholder="Thêm trang web"
-          className={style.textInputs}
-        />
-        <MDBRow>
-          <MDBCol md={4}>
-            <label>
-              <b>Điện thoại</b>
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faPhone} />
-              </span>
-              <MDBInput
-                id="phoneInput"
-                type="tel"
-                maxLength="20"
-                placeholder="Thêm số điện thoại"
-                className="form-control"
-              />
-            </div>
-          </MDBCol>
-          <MDBCol md={8}>
-            <label>
-              <b>Email</b>
-            </label>
-            <MDBInput
-              id="emailInput"
-              type="text"
-              maxLength="100"
-              placeholder="Thêm email liên lạc"
-              className={style.textInputs}
-            />
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
-          <MDBCol>
-            <label>
-              <b>Khoảng thời gian</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faClock} />
-              </span>
-              <MDBInput
-                id="durationInput"
-                type="text"
-                pattern="\d*"
-                maxLength="2"
-                placeholder="Thêm khoảng thời gian"
-                className="form-control"
-              />
-              <span className="input-group-text">tiếng</span>
-            </div>
-          </MDBCol>
-          <MDBCol>
-            <label>
-              <b>Giờ mở cửa</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faDoorOpen} />
-              </span>
-              <MDBInput id="openInput" type="time" className="form-control" />
-            </div>
-          </MDBCol>
-          <MDBCol>
-            <label>
-              <b>Giờ đóng cửa</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faDoorClosed} />
-              </span>
-              <MDBInput id="closeInput" type="time" className="form-control" />
-            </div>
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
-          <MDBCol>
-            <label>
-              <b>Giá trung bình</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faMoneyBill} />
-              </span>
-              <MDBInput
-                id="priceInput"
-                type="text"
-                pattern="\d*"
-                maxLength="20"
-                placeholder="Thêm giá tiền"
-                className="form-control"
-              />
-              <span className="input-group-text">đồng</span>
-            </div>
-          </MDBCol>
-          <MDBCol>
-            <label>
-              <b>Danh mục</b>
-              {requiredStar}
-            </label>
-            <Dropdown>
-              <Dropdown.Toggle variant="info">
-                <span id="filterDropdown" name="category">
-                  {" "}
-                  Chọn Nhãn hàng
-                </span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {this.state.brands.map((item, index) => (
-                  <Dropdown.Item
-                    onClick={this.filterChanged}
-                    id={item.brandId}
-                    name={item.brandName}
-                  >
-                    {item.brandName}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
-          <MDBCol md={4}>
-            <label>
-              <b>Vĩ độ</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faRulerVertical} />
-              </span>
-              <MDBInput
-                id="latInput"
-                type="text"
-                pattern="\d*"
-                maxLength="30"
-                placeholder="Thêm vĩ độ"
-                className="form-control"
-              />
-            </div>
-          </MDBCol>
-          <MDBCol md={4}>
-            <label>
-              <b>Kinh độ</b>
-              {requiredStar}
-            </label>
-            <div className="input-group mb-3">
-              <span className="input-group-text">
-                <FontAwesomeIcon icon={faRulerHorizontal} />
-              </span>
-              <MDBInput
-                id="lonInput"
-                type="text"
-                pattern="\d*"
-                maxLength="30"
-                placeholder="Thêm kinh độ"
-                className="form-control"
-              />
-            </div>
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
+      <div className="dashboard-container">
+        <SideBar choose={3} menu={sidebar_menu} />
+        <MDBContainer className={style.mainContainer}>
+          <div className={style.nav}>
+            <a className={style.navItem} href="./adminlist">
+              <b>Quản lí Sản phẩm</b>
+            </a>
+            <FontAwesomeIcon className={style.arrowIcon} icon={faAngleRight} />
+            {navItem}
+          </div>
+          {headerText}
+          {submitBtn}
+          <div id="errorMessage" className={style.errorMessage}></div>
           <label>
-            <b>Thuộc điểm đến</b>
+            <b>Tên</b>
             {requiredStar}
           </label>
-          {selectDestination}
-        </MDBRow>
-        <br />
-        <br />
-        <h3 style={{ textAlign: "center" }}>
-          Ảnh Địa điểm
+          <MDBTextArea
+            id="nameInput"
+            type="text"
+            maxLength="100"
+            placeholder="Thêm tên cho sản phẩm"
+            className={style.textInputs}
+            onChange={onTextAreaInput}
+            rows={1}
+          />
+
+          <label>
+            <b>Mô tả sản phẩm</b>
+            {requiredStar}
+          </label>
+          <MDBTextArea
+            id="descInput"
+            type="text"
+            maxLength="4000"
+            placeholder="Thêm mô tả"
+            className={style.textInputs}
+            onChange={onTextAreaInput}
+            rows={7}
+          />
+
+          <MDBRow>
+            <MDBCol>
+              <label>
+                <b>Nhãn hàng</b>
+                {requiredStar}
+              </label>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">
+                  <span id="filterBrandDropdown" name="brand">
+                    {" "}
+                    Chọn Nhãn hàng
+                  </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {this.state.brands.map((item, index) => (
+                    <Dropdown.Item
+                      onClick={this.filterBrandChanged}
+                      id={item.brandId}
+                      name={item.brandName}
+                    >
+                      {item.brandName}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </MDBCol>
+            <MDBCol>
+              <label>
+                <b>loại sản phẩm</b>
+                {requiredStar}
+              </label>
+              <Dropdown>
+                <Dropdown.Toggle variant="secondary">
+                  <span id="filterCategoryDropdown" name="category">
+                    {" "}
+                    Chọn Loại sản phẩm
+                  </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {this.state.categories.map((item, index) => (
+                    <Dropdown.Item
+                      onClick={this.filterCategoryChanged}
+                      id={item.categoryId}
+                      name={item.categoryName}
+                    >
+                      {item.categoryName}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </MDBCol>
+          </MDBRow>
+          <br></br>
+          <MDBRow>
+            <MDBCol>
+              <label>
+                <b>Số lượng</b>
+                {requiredStar}
+              </label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">
+                  <FontAwesomeIcon icon={faMoneyBill} />
+                </span>
+                <MDBInput
+                  id="quantityInput"
+                  type="text"
+                  pattern="\d*"
+                  maxLength="20"
+                  placeholder="Thêm giá tiền"
+                  className="form-control"
+                />
+              </div>
+            </MDBCol>
+            <MDBCol>
+              <label>
+                <b>Giá</b>
+                {requiredStar}
+              </label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">
+                  <FontAwesomeIcon icon={faMoneyBill} />
+                </span>
+                <MDBInput
+                  id="priceInput"
+                  type="text"
+                  pattern="\d*"
+                  maxLength="20"
+                  placeholder="Thêm giá tiền"
+                  className="form-control"
+                />
+                <span className="input-group-text">đồng</span>
+              </div>
+            </MDBCol>
+          </MDBRow>
+
           <br />
-        </h3>
-        <div className={style.imageGroup}>
-          {imageBox}
           <br />
-          {imageAddBtn}
-        </div>
-      </MDBContainer>
+          <h3 style={{ textAlign: "center" }}>
+            Ảnh sản phẩm
+            <br />
+          </h3>
+          <div className={style.imageGroup}>
+            {imageBox}
+            <br />
+            {imageAddBtn}
+          </div>
+        </MDBContainer>
+        <div className="dashboard-body"></div>
+      </div>
     );
   }
 }

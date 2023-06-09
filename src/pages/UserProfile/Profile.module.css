@@ -1,0 +1,121 @@
+.card {
+    width: 100%;
+    background-color: white;
+    border: none;
+}
+
+.image {
+    position: "absolute";
+    left: "50%";
+    top: "50%";
+}
+
+.avatar {
+    margin: auto;
+    transition: all 0.5s;
+    border-radius: 50%;
+    height: 148px;
+    width: 148px;
+}
+
+.btn {
+    height: 148px;
+    width: 148px;
+    border-radius: 50%;
+}
+
+.name {
+    font-size: 1.2vw;
+    font-weight: bold;
+}
+
+.email {
+    font-size: 1vw;
+    font-weight: 600;
+}
+
+.idd1 {
+    font-size: 12px;
+}
+
+.btn1 {
+    height: 40px;
+    width: 150px;
+    border: none;
+    background-color: #000;
+    color: #aeaeae;
+    font-size: 15px;
+}
+
+.text span {
+    font-size: 13px;
+    color: #545454;
+    font-weight: 500;
+}
+
+.icons i {
+    font-size: 19px;
+}
+
+hr .new1 {
+    border: 1px solid;
+}
+
+.join {
+    font-size: 14px;
+    color: #525252;
+}
+
+.date {
+    background-color: rgb(225, 223, 223);
+}
+
+.link {
+    text-decoration: underline;
+}
+
+.imageButton {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    color: transparent;
+}
+
+.imageButton:hover {
+    color: gray;
+}
+
+.editInput {
+    border: none;
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+.editInput:active,
+.editInput:focus {
+    outline: none !important;
+    border-bottom: 1px solid black;
+}
+
+.containterContent {
+    margin-bottom: 25px !important;
+    background: #fff;
+    padding: 10px;
+    width: 50%;
+}
+
+.gender {
+    margin-left: 50px;
+}
+
+.btnEdit {
+    background-color: #e7e7e7;
+    color: black;
+    border-radius: 5px;
+    padding: 5px 20px;
+}

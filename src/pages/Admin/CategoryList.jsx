@@ -29,11 +29,11 @@ import {
 } from "mdb-react-ui-kit";
 import style from "../css/BrandList.module.css";
 import $ from "jquery";
-const BrandList = () => {
+const CategoryList = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/brand/all", {
+      .get("/api/categories/all", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -62,7 +62,7 @@ const BrandList = () => {
           <MDBContainer className={style.mainContainer}>
             <div className={style.nav}>
               <a className={style.navItem} href="/dashboard/userList">
-                <b>Quản lí nhãn hàng</b>
+                <b>Quản lí loại sản phẩm</b>
               </a>
             </div>
             <br></br>
@@ -74,38 +74,15 @@ const BrandList = () => {
                   <tr className={style.tableDataGrey}>
                     <th>ID</th>
                     <th>Tên</th>
-                    <th>Số điện thoại</th>
-                    <th>Email</th>
-                    <th>Địa chỉ</th>
-
-                    <th>Thao Tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.map((result) => {
                     return (
                       <tr className={style.tableData}>
-                        <td className={style.tableDate}>{result.brandId}</td>
-                        <td className={style.tableDate}>{result.brandName}</td>
-                        <td className={style.tableDate}>{result.phone}</td>
-                        <td className={style.tableDate}>{result.email}</td>
-                        <td className={style.tableDate}>{result.address}</td>
-
-                        <td>
-                          <a
-                            className={style.tableIcons}
-                            href={"/dashboard/ModifyBrand/" + result.brandId}
-                          >
-                            <FontAwesomeIcon icon={faPenToSquare} />
-                          </a>
-                          {/* {hideBtn} */}
-                          <a
-                            className={style.tableIcons}
-                            id={result.brandId}
-                            onClick={() => deleteBrand(result.brandId)}
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </a>
+                        <td className={style.tableDate}>{result.categoryId}</td>
+                        <td className={style.tableDate}>
+                          {result.categoryName}
                         </td>
                       </tr>
                     );
@@ -119,4 +96,4 @@ const BrandList = () => {
     </>
   );
 };
-export default BrandList;
+export default CategoryList;

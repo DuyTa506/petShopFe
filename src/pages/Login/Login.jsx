@@ -59,7 +59,7 @@ function Login() {
           if (role != "Admin") {
             window.location.href = "http://localhost:3000/";
           } else {
-            window.location.href = "http://localhost:3000/admin/dashboard";
+            window.location.href = "http://localhost:3000/dashboard";
           }
         }
         setUser({ ...user, username: "", password: "" });

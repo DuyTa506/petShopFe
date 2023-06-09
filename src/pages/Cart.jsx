@@ -226,8 +226,9 @@ const Cart = () => {
                               >
                                 <img
                                   src={
-                                    RELATIVE_URL_IMG_PRODUCT +
-                                    item.product.thumbnailUrl
+                                    item.product.listImg.length > 0
+                                      ? item.product.listImg[0].url
+                                      : "https://adlog.narmadeayurvedam.com/dtup/default-product.png"
                                   }
                                   // className="w-100"
                                   alt={item.product.name}

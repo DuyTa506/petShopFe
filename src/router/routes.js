@@ -22,6 +22,8 @@ import RequireAuth from "../components/RequireAuth";
 import Signup from "../pages/Login/Signup";
 import ProductList from "../pages/Admin/ProductList";
 import AddUpdateProduct from "../pages/Admin/AddUpdateProduct";
+import ProfilePage from "../pages/UserProfile/ProfilePage";
+import CategoryList from "../pages/Admin/CategoryList";
 export default function RootRoutes() {
   return (
     <Router>
@@ -43,9 +45,14 @@ export default function RootRoutes() {
         <Route path="/failCheckOut/*" element={<FailCheckout />} />
 
         <Route element={<RequireAuth allowedRoles={["Customer", "Admin"]} />}>
+          <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
           <Route path="/cart" element={<Cart />} />
         </Route>
         <Route element={<RequireAuth allowedRoles={["Admin"]} />}>
+          <Route
+            path="/dashboard/CategoryList"
+            element={<CategoryList></CategoryList>}
+          ></Route>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/userList" element={<UserList />} />
           <Route path="/dashboard/BrandList" element={<BrandList />} />
