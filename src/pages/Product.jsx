@@ -24,6 +24,8 @@ import { Footer, Navbar } from "../components";
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import { RELATIVE_URL_IMG_PRODUCT } from "../const/constant";
 import { Dropdown, Menu, Modal, Tooltip } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(false);
@@ -33,12 +35,55 @@ const Product = () => {
   const [ratings, setRatings] = useState([]);
   const [comment, setComment] = useState("");
   const [rate, setRate] = useState(0);
-  const dispatch = useDispatch();
+  const [cartId, setCartId] = useState(0);
   const { TextArea } = Input;
-  const addProduct = (product) => {
-    dispatch(addCart(product));
+  const successToast = () =>
+    toast.success("Thêm sản phẩm thành công!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const addProduct = () => {
+    console.log();
+    axios
+      .post(
+        "api/cart/add-to-cart?cId=" + cartId + "&pId=" + id,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        successToast();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  const getUserCart = () => {
+    axios
+      .get("/api/cart/get-cart?cId=" + localStorage.getItem("id"), {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
 
+        setCartId(res.data.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleChange = (e) => {
     setComment(e.target.value);
   };
@@ -136,6 +181,7 @@ const Product = () => {
     };
     getProduct();
     getRatings();
+    getUserCart();
   }, [id]);
 
   var avgRate = 0;
@@ -445,6 +491,18 @@ const Product = () => {
   return (
     <>
       <Navbar />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <MDBContainer className={styles.containterContent}>
         <MDBRow>{loading ? <Loading /> : <ShowProduct />}</MDBRow>
         <MDBRow>
