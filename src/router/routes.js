@@ -24,6 +24,7 @@ import ProductList from "../pages/Admin/ProductList";
 import AddUpdateProduct from "../pages/Admin/AddUpdateProduct";
 import ProfilePage from "../pages/UserProfile/ProfilePage";
 import CategoryList from "../pages/Admin/CategoryList";
+import ContactUs from "../pages/ContactUs";
 export default function RootRoutes() {
   return (
     <Router>
@@ -33,7 +34,7 @@ export default function RootRoutes() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/notEnough/:id" element={<NotEnoughProduct />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contactUs" element={<ContactUs />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />

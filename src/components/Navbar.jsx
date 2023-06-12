@@ -114,6 +114,11 @@ const Navbar = () => {
                 Products
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/contactUs">
+                Contact us
+              </NavLink>
+            </li>
           </ul>
           <div className="buttons text-center">
             <MDBNavbarNav right fullWidth={false}>

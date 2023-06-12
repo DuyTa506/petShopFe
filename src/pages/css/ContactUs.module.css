@@ -1,0 +1,58 @@
+.mainContainer {
+    width: 70%;
+    margin-bottom: 5vh;
+    display: block;
+    margin-top: 5vh;
+    padding: 5px;
+    margin: 5vh auto;
+    border: 1px solid black;
+    height: 80vh;
+    position: relative;
+    border-radius: 5px;
+}
+
+.listBox {
+    margin: 5vh auto;
+}
+
+.inputText {
+    display: inline-flex;
+    min-width: 0% !important;
+    width: 90%;
+}
+
+.inputBtn {
+    width: 10%;
+    display: inline-flex;
+}
+
+.input {
+    border-top: 1px solid black;
+    padding: 10px;
+    min-width: 0% !important;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.nav {
+    height: max-content;
+    padding: 10px;
+    min-width: 0% !important;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid black;
+}
+
+.message {
+    min-width: 0% !important;
+    width: 100%;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    overflow-y: scroll;
+    height: 70%;
+}
