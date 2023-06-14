@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar } from "../components";
+import { Footer, Navbar } from "../components";
 import { useParams } from "react-router-dom";
 import axios from "../api/axios";
 const NotEnoughProduct = () => {
@@ -41,6 +41,7 @@ const NotEnoughProduct = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };

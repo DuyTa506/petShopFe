@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar } from "../components";
+import { Navbar, Footer } from "../components";
 
 const FailCheckout = () => {
   return (
@@ -20,6 +20,7 @@ const FailCheckout = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };

@@ -2,6 +2,7 @@ import axios from "../../api/axios";
 import { MDBCard, MDBIcon, MDBBtn } from "mdb-react-ui-kit";
 import { React, useRef, useState } from "react";
 import style from "./Profile.module.css";
+import { message } from "antd";
 function ProfileCard(props) {
   console.log(props.user);
   const [curUsername, setUsername] = useState(props.user.userName);

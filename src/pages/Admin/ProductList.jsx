@@ -108,7 +108,7 @@ const ProductList = () => {
                         <td>
                           <a
                             className={style.tableIcons}
-                            href={"/dashboard/ModifyUser/" + result.id}
+                            href={"/dashboard/ModifyProduct?id=" + result.id}
                           >
                             <FontAwesomeIcon icon={faPenToSquare} />
                           </a>

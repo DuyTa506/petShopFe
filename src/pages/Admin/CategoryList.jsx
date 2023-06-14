@@ -56,7 +56,7 @@ const CategoryList = () => {
   return (
     <>
       <div className={"dashboard-container "}>
-        <SideBar choose={6} menu={sidebar_menu} />
+        <SideBar choose={5} menu={sidebar_menu} />
 
         <div className={"dashboard-body " + style.dbBody}>
           <MDBContainer className={style.mainContainer}>

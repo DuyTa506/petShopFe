@@ -62,7 +62,10 @@ const Navbar = () => {
   const [userCart, setUserCart] = useState([]);
   const state = useSelector((state) => state.handleCart);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
+    <nav
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+      className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top"
+    >
       <div className="container">
         <NavLink className="navbar-brand fw-bold fs-4 px-2" to="/">
           {" "}
@@ -79,7 +82,7 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <MDBCol md="6">
+        <MDBCol md="4">
           <div className="input-group md-form form-sm form-1 pl-0">
             <div className="input-group-prepend">
               <span
@@ -111,12 +114,18 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/product">
-                Products
+                Sản phẩm
               </NavLink>
             </li>
+
             <li className="nav-item">
               <NavLink className="nav-link" to="/contactUs">
                 Contact us
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/about">
+                About us
               </NavLink>
             </li>
           </ul>
@@ -140,7 +149,7 @@ const Navbar = () => {
                         {localStorage.getItem("role") &&
                         localStorage.getItem("role").toLowerCase() ==
                           "admin" ? (
-                          <MDBDropdownItem link href="/admin/dashboard">
+                          <MDBDropdownItem link href="/dashboard">
                             Dashboard
                           </MDBDropdownItem>
                         ) : (
@@ -148,6 +157,9 @@ const Navbar = () => {
                         )}
                         <MDBDropdownItem link href="/profile">
                           Hồ sơ cá nhân
+                        </MDBDropdownItem>
+                        <MDBDropdownItem link href="/OrderHistory">
+                          Lịch sử mua hàng
                         </MDBDropdownItem>
                         <MDBDropdownItem link href="/change-password">
                           Đổi mật khẩu

@@ -25,6 +25,8 @@ import AddUpdateProduct from "../pages/Admin/AddUpdateProduct";
 import ProfilePage from "../pages/UserProfile/ProfilePage";
 import CategoryList from "../pages/Admin/CategoryList";
 import ContactUs from "../pages/ContactUs";
+import ChangePassword from "../pages/ChangePassword";
+import OrderHistory from "../pages/OrderHistory";
 export default function RootRoutes() {
   return (
     <Router>
@@ -48,6 +50,14 @@ export default function RootRoutes() {
         <Route element={<RequireAuth allowedRoles={["Customer", "Admin"]} />}>
           <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
           <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/ChangePassword"
+            element={<ChangePassword></ChangePassword>}
+          ></Route>
+          <Route
+            path="/OrderHistory"
+            element={<OrderHistory></OrderHistory>}
+          ></Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={["Admin"]} />}>
           <Route
